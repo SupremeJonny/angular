@@ -19,7 +19,7 @@ registry=https://registry.npmjs.org
 ------
 # Projects Introduction
 
-## documentTreeWithoutDependencies
+## 1. documentTreeWithoutDependencies
 
 ### Make Sure
 
