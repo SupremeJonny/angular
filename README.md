@@ -1,5 +1,5 @@
-# angular 2+
-angular 2 3 4 5 7 8 projects
+# Angular 2+
+Angular 2 3 4 5 7 8 projects
 ------
 # Pre-requirement
 
@@ -8,13 +8,19 @@ angular 2 3 4 5 7 8 projects
 ## Install Angular cli
 
 ## proxy issue
+
+### 1. proxy add
 ```
-proxy=http://<>:<>@<>:8080/
+npm config set proxy http://<>:<>@<>:8080
+npm config set https-proxy http://<>:<>@<>:8080
+npm config set registry=https://registry.npmjs.org
+```
 
-https-proxy=http://<>:<>@<>:8080/
+### 2. proxy remove
 
-registry=https://registry.npmjs.org
-
+```
+npm config rm proxy
+npm config rm https-proxy
 ```
 ------
 # Projects Introduction
