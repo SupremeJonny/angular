@@ -1,0 +1,71 @@
+<div class="welcome-title">
+  <div class="welcome-text"><span class="app-title">Flameapollo Doc</span></div>
+  <div class="app-version">V1.0.0</div>
+</div>
+<div class="document">
+  <!-- document category tree -->
+  <div class="document-category" >
+      <ng-container *ngIf="documentTree != []" >
+          <ul *ngFor="let document of documentTree; let i = index; ">
+              <li>
+                  <span class="caret" (click)="showContent(document); expand($event);"
+                      [ngClass]="{'selected': currentDocument.id == i+1 }">
+                      {{i+1}}.&nbsp;&nbsp;{{document.title}}
+                  </span>
+                  <ul class="nested">
+                      <ng-template #recursiveList let-document let-ri="rowIndex">
+                          <li *ngFor="let child of document; let j = index;">
+                              <span class="caret" (click)="showContent(child); expand($event);"
+                                  [ngClass]="{'selected': currentDocument.id == ri+'.'+(j+1)}">
+                                  {{ri+'.'+(j+1)}}.&nbsp;&nbsp;{{child.title}}
+                              </span>
+                              <ul class="nested" *ngIf="child.children?.length > 0;">
+                                  <ng-container
+                                      *ngTemplateOutlet="recursiveList; context:{ $implicit: child.children , rowIndex: ri+'.'+(j+1) }">
+                                  </ng-container>
+                              </ul>
+                          </li>
+                      </ng-template>
+                      <ng-container
+                          *ngTemplateOutlet="recursiveList; context:{ $implicit: document.children , rowIndex: (i+1)}">
+                      </ng-container>
+                  </ul>
+              </li>
+          </ul>
+      </ng-container>
+  </div>
+  <!-- document content -->
+  <div class="document-content">
+      <div class="document-content-breadcrumbs">
+          <div class="breaditem" *ngFor="let item of currentBreadCrumbs ; let i =index;" (click)="showContent(item);">
+              <div
+                  [ngClass]="{ 'flex-0-0-current' : i == currentBreadCrumbs.length-1, 'flex-0-0' : i < currentBreadCrumbs.length-1 }">
+                  {{item.title}}
+              </div>
+              <div class="flex-0-0" *ngIf="i < currentBreadCrumbs.length-1">
+                  <i class="fas fa-caret-right" aria-hidden="true"></i>
+              </div>
+          </div>
+      </div>
+      <div class="document-content-body">
+          <markdown [src]="currentContent"></markdown>
+      </div>
+      <div class="document-content-pagination">
+          <ng-container *ngIf="documentTree != []">
+              <div class="pervious-page">
+                  <span *ngIf="cursor > 0" (click)="previousContent(cursor);">
+                      <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                  </span>
+              </div>
+              <div class="pageNumber">
+                  {{cursor+1}}/{{documentList.length}}
+              </div>
+              <div class="next-page">
+                  <span *ngIf="documentList.length-1 > cursor" (click)="nextContent(cursor);">
+                      <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                  </span>
+              </div>
+          </ng-container>
+      </div>
+  </div>
+</div>
