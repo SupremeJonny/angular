@@ -1,0 +1,8 @@
+{
+  "/mods/api": {
+   "target": "http://localhost:3300/",
+   "secure": false,
+   "logLevel": "debug",
+   "changeOrigin": true
+  }
+}
